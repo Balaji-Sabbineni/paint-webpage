@@ -93,3 +93,24 @@ const clearCanvas = () => {
   eraser = false;
   brushMode = false;
 };
+
+
+const saveCanvasToLocalStorage = () => {
+    const imageData = canvas.toDataURL();
+    localStorage.setItem("canvasData", imageData);
+};
+
+const loadCanvasFromLocalStorage = () => {
+    const savedData = localStorage.getItem("canvasData");
+    if (savedData) {
+        const img = new Image();
+        img.src = savedData;
+        img.onload = () => {
+            ctx.drawImage(img, 0, 0);
+        };
+    }
+};
+
+canvas.addEventListener("mouseup", saveCanvasToLocalStorage);
+
+window.addEventListener("load", loadCanvasFromLocalStorage);
